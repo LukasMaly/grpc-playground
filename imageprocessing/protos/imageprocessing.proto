@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package imageprocessing;
+
+service ImageProcessing {
+  rpc ToGrayscale (Image) returns (Image) {}
+}
+
+message Image {
+  int32 height = 1;
+  int32 width = 2;
+  int32 channels = 3;
+  bytes data = 4;
+}
