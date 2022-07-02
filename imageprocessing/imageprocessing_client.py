@@ -10,7 +10,7 @@ import imageprocessing_pb2_grpc
 
 
 def run():
-    src = cv2.imread('../data/lena.png')
+    src = cv2.imread('../data/peppers.tiff')
     height, width = src.shape[:2]
     channels = src.shape[2]
     data = src.tobytes()

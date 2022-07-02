@@ -10,7 +10,7 @@ import imagestreamprocessing_pb2_grpc
 
 
 def generate_stream():
-    src = cv2.imread('../data/lena.png')
+    src = cv2.imread('../data/peppers.tiff')
     height, width = src.shape[:2]
     channels = src.shape[2]
     for i in range(100):
