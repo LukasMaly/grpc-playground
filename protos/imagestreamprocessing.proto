@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package imagestreamprocessing;
+
+service ImageStreamProcessing {
+  rpc ToGrayscale (stream Image) returns (stream Image) {}
+}
+
+message Image {
+  int32 height = 1;
+  int32 width = 2;
+  int32 channels = 3;
+  bytes data = 4;
+}

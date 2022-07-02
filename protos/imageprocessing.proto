@@ -6,10 +6,6 @@ service ImageProcessing {
   rpc ToGrayscale (Image) returns (Image) {}
 }
 
-service ImageProcessingStream {
-  rpc ToGrayscale (stream Image) returns (stream Image) {}
-}
-
 message Image {
   int32 height = 1;
   int32 width = 2;

@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import imageprocessing_pb2 as imageprocessing__pb2
+import imagestreamprocessing_pb2 as imagestreamprocessing__pb2
 
 
-class ImageProcessingStub(object):
+class ImageStreamProcessingStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,42 +14,42 @@ class ImageProcessingStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.ToGrayscale = channel.unary_unary(
-                '/imageprocessing.ImageProcessing/ToGrayscale',
-                request_serializer=imageprocessing__pb2.Image.SerializeToString,
-                response_deserializer=imageprocessing__pb2.Image.FromString,
+        self.ToGrayscale = channel.stream_stream(
+                '/imagestreamprocessing.ImageStreamProcessing/ToGrayscale',
+                request_serializer=imagestreamprocessing__pb2.Image.SerializeToString,
+                response_deserializer=imagestreamprocessing__pb2.Image.FromString,
                 )
 
 
-class ImageProcessingServicer(object):
+class ImageStreamProcessingServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def ToGrayscale(self, request, context):
+    def ToGrayscale(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ImageProcessingServicer_to_server(servicer, server):
+def add_ImageStreamProcessingServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'ToGrayscale': grpc.unary_unary_rpc_method_handler(
+            'ToGrayscale': grpc.stream_stream_rpc_method_handler(
                     servicer.ToGrayscale,
-                    request_deserializer=imageprocessing__pb2.Image.FromString,
-                    response_serializer=imageprocessing__pb2.Image.SerializeToString,
+                    request_deserializer=imagestreamprocessing__pb2.Image.FromString,
+                    response_serializer=imagestreamprocessing__pb2.Image.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'imageprocessing.ImageProcessing', rpc_method_handlers)
+            'imagestreamprocessing.ImageStreamProcessing', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class ImageProcessing(object):
+class ImageStreamProcessing(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def ToGrayscale(request,
+    def ToGrayscale(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,8 @@ class ImageProcessing(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/imageprocessing.ImageProcessing/ToGrayscale',
-            imageprocessing__pb2.Image.SerializeToString,
-            imageprocessing__pb2.Image.FromString,
+        return grpc.experimental.stream_stream(request_iterator, target, '/imagestreamprocessing.ImageStreamProcessing/ToGrayscale',
+            imagestreamprocessing__pb2.Image.SerializeToString,
+            imagestreamprocessing__pb2.Image.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

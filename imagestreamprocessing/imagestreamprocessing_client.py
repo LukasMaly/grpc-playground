@@ -5,8 +5,8 @@ import cv2
 import grpc
 import numpy as np
 
-import imageprocessing_pb2
-import imageprocessing_pb2_grpc
+import imagestreamprocessing_pb2
+import imagestreamprocessing_pb2_grpc
 
 
 def generate_stream():
@@ -17,12 +17,12 @@ def generate_stream():
         img = src.copy()
         img = cv2.putText(img, str(i), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255))
         data = img.tobytes()
-        yield imageprocessing_pb2.Image(height=height, width=width, channels=channels, data=data)
+        yield imagestreamprocessing_pb2.Image(height=height, width=width, channels=channels, data=data)
 
 
 def run():
     with grpc.insecure_channel('localhost:50051') as channel:
-        stub = imageprocessing_pb2_grpc.ImageProcessingStreamStub(channel)
+        stub = imagestreamprocessing_pb2_grpc.ImageStreamProcessingStub(channel)
         responses = stub.ToGrayscale(generate_stream())
         for response in responses:
             dst = np.frombuffer(response.data, dtype=np.uint8)
